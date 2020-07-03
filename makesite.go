@@ -16,7 +16,7 @@ type content struct {
 }
 
 func main() {
-	color.Println(color.Red("Start making your own websites!"))
+	color.Println(color.Red("Welcome to makesite"))
 	save()
 }
 
@@ -53,6 +53,12 @@ func writeTemplateFromFile(file string) {
 	}
 }
 
+func print(numberofPages int) {
+	// fmt.Print()
+	color.Println(color.Red("You have generated"))
+	color.Println(color.White(numberofPages))
+	color.Println(color.Green("pages"))
+}
 func save() {
 
 	filename := flag.String("file", "test3.txt", "Name of your file(.txt) you want to convert into a template(.html)")

@@ -2,6 +2,7 @@
 package main
 
 import (
+	"flag"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -11,6 +12,12 @@ import (
 type content struct {
 	Content string
 
+}
+
+func main() {
+	filename := flag.String("file", "test3.txt", "Name of your file(.txt) you want to convert into a template(.html)")
+	flag.Parse()
+	writeTemplateFromFile(*filename)
 }
 
 // function that reads the file
@@ -44,9 +51,4 @@ func writeTemplateFromFile(file string) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func main() {
-	fileName := "third-post.txt"
-	writeTemplateFromFile(fileName)
 }

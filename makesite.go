@@ -1,4 +1,3 @@
-
 package main
 
 import (
@@ -7,6 +6,8 @@ import (
 	"os"
 	"strings"
 	"html/template"
+	"fmt"
+	"github.com/labstack/gommon/color"
 )
 
 type content struct {
@@ -15,15 +16,8 @@ type content struct {
 }
 
 func main() {
+	color.Println(color.Red("Start making your own websites!"))
 	save()
-}
-
-
-func save() {
-	filename := flag.String("file", "test3.txt", "Name of your file(.txt) you want to convert into a template(.html)")
-	directory := flag.String("dir", "", "All you files(.txt) are contained in this directory")
-	flag.Parse()
-	writeTemplateFromFile(*filename)
 }
 
 // function that reads the file
@@ -57,4 +51,36 @@ func writeTemplateFromFile(file string) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func save() {
+
+	filename := flag.String("file", "test3.txt", "Name of your file(.txt) you want to convert into a template(.html)")
+	directory := flag.String("dir", "", "All you files(.txt) are contained in this directory")
+	flag.Parse()
+	// adding count of pages
+	numberofPages := 0
+
+	if *directory != "" {
+		files, err := ioutil.ReadDir(*directory)
+		if err != nil {
+			panic(err)
+		}
+		for _, f := range files {
+			fname := f.Name()
+			// making sure if the filename has .txt in it
+			if strings.Contains(fname, ".") {
+				fmt.Println("There is a file(.txt) in your directory", fname)
+				writeTemplateFromFile((fname))
+				numberofPages += 1
+			}
+		}
+
+	} else {
+		writeTemplateFromFile(*filename)
+		numberofPages += 1
+	}
+
+	print(numberofPages)
+
 }

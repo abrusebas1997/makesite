@@ -16,5 +16,10 @@ type create struct {
 }
 
 func readFile(filename string) string {
-
+	fileContents, err := ioutil.ReadFile(filename)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Print(string(fileContents))
+	return string(fileContents)
 }

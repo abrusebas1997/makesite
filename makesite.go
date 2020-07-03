@@ -1,57 +1,52 @@
+
 package main
 
 import (
-	// "flag"
-	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	"html/template"
 )
 
-type Data struct {
+type content struct {
 	Content string
+
 }
 
-func writeFile() {
-	bytesToWrite := []byte("filename")
-	err := ioutil.WriteFile("new-file.txt", bytesToWrite, 0644)
+// function that reads the file
+func readFile(file string) string {
+	fileContents, err := ioutil.ReadFile(file)
 	if err != nil {
 		panic(err)
 	}
-}
-
-func readFile() string {
-	fileContents, err := ioutil.ReadFile("first-post.txt")
-	if err != nil {
-		panic(err)
-	}
-
 
 	return string(fileContents)
 }
+// function that writes the file
+func writeFile(fileName string) *os.File {
+	fileName = strings.Split(fileName, ".")[0] + ".html"
+	file, err := os.Create(fileName)
+	if err != nil {
+		panic(err)
+	}
 
-func writeTemplate() {
-	var fileData Data
-	fileData.Content = readFile()
+	return file
+}
+// function that converts the .txt file to a html template
+func writeTemplateFromFile(file string) {
+	var fileData content
+	fileData.Content = readFile(file)
 
 	t := template.Must(template.New("template.tmpl").ParseFiles("template.tmpl"))
-	err := t.Execute(os.Stdout, fileData)
+	File := writeFile(file)
+
+	err := t.Execute(File, fileData)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func renderTemplate() string{
-	var filename string
-	bytesToWrite := []byte(filename)
-	err := ioutil.WriteFile("new-file.txt", bytesToWrite, 0644)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Println(err)
-	return fmt.Sprintf("%s file created", err)
-}
 func main() {
-	// flags
-	writeTemplate()
+	fileName := "third-post.txt"
+	writeTemplateFromFile(fileName)
 }

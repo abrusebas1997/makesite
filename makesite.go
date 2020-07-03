@@ -15,6 +15,11 @@ type content struct {
 }
 
 func main() {
+	save()
+}
+
+
+func save() {
 	filename := flag.String("file", "test3.txt", "Name of your file(.txt) you want to convert into a template(.html)")
 	flag.Parse()
 	writeTemplateFromFile(*filename)

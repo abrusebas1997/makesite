@@ -21,6 +21,7 @@ func main() {
 
 func save() {
 	filename := flag.String("file", "test3.txt", "Name of your file(.txt) you want to convert into a template(.html)")
+	directory := flag.String("dir", "", "All you files(.txt) are contained in this directory")
 	flag.Parse()
 	writeTemplateFromFile(*filename)
 }
